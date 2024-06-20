@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Task {
     String name;
     String description;
@@ -19,7 +17,6 @@ public class Task {
                 "name= '" + name + '\'' +
                 ", desctiption= '" + description + '\'' +
                 ", status = '" + status + '\'' +
-                ", id = '" + id + '\'' +
                 "}";
     }
 

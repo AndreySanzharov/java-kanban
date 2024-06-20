@@ -2,46 +2,58 @@ import java.util.ArrayList;
 
 public class Epic extends Task {
 
-    protected ArrayList<Subtask> subtaskList;
+    ArrayList<Subtask> subtaskList = new ArrayList<>();
 
-    public Epic(String name, String description, ArrayList<Subtask> subtaskList) {
-        super(name, description, Status.IN_PROGRESS);
-        this.subtaskList = subtaskList;
+    public Epic(String name, String description) {
+        super(name, description, Status.NEW);
+        updateStatus();
+    }
 
+    public void addSubtask(Subtask subtask){
+        subtaskList.add(subtask);
+        updateStatus();
+    }
+
+    public void updateSubtask(int index, Subtask subtask){
+        subtaskList.set(index, subtask);
+        updateStatus();
+    }
+    public void deleteSubtask(int index){
+        subtaskList.remove(index);
+        updateStatus();
+    }
+
+    private void updateStatus(){
 
         if (subtaskList.isEmpty()) {
             status = Status.NEW;
         } else {
+            int statusCounter = 0;
             for (Subtask subtask : subtaskList) {
-                int statusCounter = 0;
-
                 if (subtask.status == Status.NEW) {
                     statusCounter++;
                 }
-                if (statusCounter == (subtaskList.size() - 1)) {
+                if (statusCounter == subtaskList.size()) {
                     status = Status.NEW;
-                    break;
+                }else{
+                    status = Status.IN_PROGRESS;
                 }
             }
         }
 
+        int statusCounter = 0;
         for (Subtask subtask : subtaskList) {
-            int statusCounter = 0;
             if (subtask.status == Status.DONE) {
                 statusCounter++;
             }
-            if (statusCounter == (subtaskList.size() - 1)) {
+            if (statusCounter == subtaskList.size()) {
                 status = Status.DONE;
-                break;
             }
         }
 
+
+
+
+
     }
-
 }
-
-
-
-
-
-
