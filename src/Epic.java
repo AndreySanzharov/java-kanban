@@ -9,21 +9,22 @@ public class Epic extends Task {
         updateStatus();
     }
 
-    public void addSubtask(Subtask subtask){
+    public void addSubtask(Subtask subtask) {
         subtaskList.add(subtask);
         updateStatus();
     }
 
-    public void updateSubtask(int index, Subtask subtask){
+    public void updateSubtask(int index, Subtask subtask) {
         subtaskList.set(index, subtask);
         updateStatus();
     }
-    public void deleteSubtask(int index){
+
+    public void deleteSubtask(int index) {
         subtaskList.remove(index);
         updateStatus();
     }
 
-    private void updateStatus(){
+    private void updateStatus() {
 
         if (subtaskList.isEmpty()) {
             status = Status.NEW;
@@ -35,7 +36,7 @@ public class Epic extends Task {
                 }
                 if (statusCounter == subtaskList.size()) {
                     status = Status.NEW;
-                }else{
+                } else {
                     status = Status.IN_PROGRESS;
                 }
             }
@@ -50,9 +51,6 @@ public class Epic extends Task {
                 status = Status.DONE;
             }
         }
-
-
-
 
 
     }
