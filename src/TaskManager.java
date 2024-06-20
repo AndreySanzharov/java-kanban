@@ -16,13 +16,12 @@ public class TaskManager {
         epicMap.clear();
     }
 
-    public Object getTaskById(int id) {
+    public Task getTaskById(int id) {
 
         return taskMap.get(id);
     }
 
-    public Object getEpicById(int id) {
-
+    public Epic getEpicById(int id) {
         return epicMap.get(id);
     }
 
