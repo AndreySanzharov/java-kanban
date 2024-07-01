@@ -24,8 +24,7 @@ public class Epic extends Task {
         updateStatus();
     }
 
-    private void updateStatus() {
-
+    public void updateStatus() {
         if (subtaskList.isEmpty()) {
             status = Status.NEW;
         } else {
@@ -41,7 +40,6 @@ public class Epic extends Task {
                 }
             }
         }
-
         int statusCounter = 0;
         for (Subtask subtask : subtaskList) {
             if (subtask.status == Status.DONE) {
@@ -51,7 +49,5 @@ public class Epic extends Task {
                 status = Status.DONE;
             }
         }
-
-
     }
 }

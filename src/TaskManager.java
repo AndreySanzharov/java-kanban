@@ -1,67 +1,29 @@
 import java.util.HashMap;
 
-public class TaskManager {
-    int id = 1;
+public interface TaskManager {
+    HashMap<Integer, Task> getAll();
 
-    HashMap<Integer, Task> taskMap = new HashMap<>();
-    HashMap<Integer, Epic> epicMap = new HashMap<>();
+    void deleteAll();
 
+    Task getTaskById(int id);
 
-    public HashMap<Integer, Task> getAll() {
-        return taskMap;
-    }
+    Epic getEpicById(int id);
 
-    public void deleteAll() {
-        taskMap.clear();
-        epicMap.clear();
-    }
+    Subtask getSubtaskById(int epId, int subId);
 
-    public Task getTaskById(int id) {
+    void addTask(Task task);
 
-        return taskMap.get(id);
-    }
+    void addEpic(Epic epic);
 
-    public Epic getEpicById(int id) {
-        return epicMap.get(id);
-    }
+    void addSubtask(int id, Subtask subtask);
 
+    void updateTask(int id, Task task);
 
-    public void addTask(Task task) {
-        id++;
-        taskMap.put(task.id, task);
-    }
+    void updateSubtask(int epicId, int subId, Subtask subtask);
 
-    public void addEpic(Epic epic) {
-        id++;
-        epicMap.put(epic.id, epic);
-    }
+    void deleteSubtask(int epicId, int subId);
 
-    public void addSubtask(int id, Subtask subtask) {
-        Epic epic = epicMap.get(id);
-        epic.addSubtask(subtask);
-    }
+    void deleteTaskById(int id);
 
-
-    public void updateTask(int id, Task task) {
-        taskMap.put(id, task);
-    }
-
-    public void updateSubtask(int epicId, int subId, Subtask subtask) {
-        Epic epic = epicMap.get(epicId);
-        epic.updateSubtask(subId, subtask);
-    }
-
-    public void deleteSubtask(int epicId, int subId) {
-        Epic epic = epicMap.get(epicId);
-        epic.deleteSubtask(subId);
-    }
-
-    public void deleteTaskById(int id) {
-        taskMap.remove(id);
-    }
-
-    public void deleteEpicById(int id) {
-        epicMap.remove(id);
-    }
-
+    void deleteEpicById(int id);
 }
