@@ -1,7 +1,7 @@
-import java.util.HashMap;
+import java.util.List;
 
 public interface TaskManager {
-    HashMap<Integer, Task> getAll();
+    List<Task> getAll();
 
     void deleteAll();
 

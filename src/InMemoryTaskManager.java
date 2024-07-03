@@ -1,18 +1,23 @@
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     int id;
 
-    HashMap<Integer, Task> taskMap = new HashMap<>();
-    HashMap<Integer, Epic> epicMap = new HashMap<>();
+    Map<Integer, Task> taskMap = new HashMap<>();
+    Map<Integer, Epic> epicMap = new HashMap<>();
 
     InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
 
 
     @Override
-    public HashMap<Integer, Task> getAll() {
-        return taskMap;
+    public List<Task> getAll() {
+        ArrayList<Task> rez = new ArrayList<>();
+        rez.addAll(taskMap.values());
+        rez.addAll(epicMap.values());
+        return rez;
     }
 
     @Override

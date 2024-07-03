@@ -1,13 +1,13 @@
 public class Managers {
-    private TaskManager TaskManager;
-    private HistoryManager HistoryManager;
 
     public TaskManager getDefault() {
-        return TaskManager;
+
+        return new InMemoryTaskManager();
     }
 
     public HistoryManager getDefaultHistory() {
-        return HistoryManager;
+
+        return new InMemoryHistoryManager();
     }
 
 }

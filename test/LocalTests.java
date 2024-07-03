@@ -21,13 +21,6 @@ public class LocalTests {
         Assertions.assertEquals(epic, createdEpic, "Эпики не равны при равном ID");
     }
 
-    /*
-    Не совсем понятно, как создать тест для эпика в качестве подзадачи,
-     потому что подзадачи хранятся в списке, у которого уже указан параметр Subtask.
-     Сама Intelliji не позволит это сделать. Аналогично со следующим пунктом, где подзадача должна стать своим же эпиком.
-
-     */
-
     @Test
     public void typesOfHistoryIsDifferent() {
         inMemoryTaskManager.addTask(task);
@@ -63,6 +56,4 @@ public class LocalTests {
         System.out.println(InMemoryHistoryManager.history);
         Assertions.assertTrue(InMemoryHistoryManager.history.size() > 1);
     }
-
-
 }

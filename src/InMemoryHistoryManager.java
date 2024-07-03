@@ -1,23 +1,21 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    int ageOfTask = 0; // чтобы удалить самый старый элемент, создадим условный возраст элемента
+    static List<Task> history = new ArrayList<>();
+    private final int MAX_SIZE = 9;
 
     @Override
     public void add(Task task) {
-        if (ageOfTask >= 9) { // дошли до последней задачи - обнулили счетчик
-            ageOfTask = 0;
+        if (history.size() >= MAX_SIZE){
+            history.remove(0);
         }
-        if (history.size() < 9) {
-            history.add(task);
-        } else {
-            history.set(ageOfTask, task);
-            ageOfTask++;
-        }
+        history.add(task);
+
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
+    public List<Task> getHistory() {
         return history;
     }
 
