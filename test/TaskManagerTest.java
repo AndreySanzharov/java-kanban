@@ -70,8 +70,8 @@ class TaskManagerTest {
     void addSubtask() {
         inMemoryTaskManager.addSubtask(1, new Subtask("VVV", "VVV", Status.DONE));
         Epic epic = inMemoryTaskManager.epicMap.get(1);
-        System.out.println(epic.subtaskList);
-        assertTrue(!epic.subtaskList.isEmpty());
+        System.out.println(epic.getSubtaskList());
+        assertTrue(!epic.getSubtaskList().isEmpty());
     }
 
     @Test
@@ -84,7 +84,7 @@ class TaskManagerTest {
         System.out.println(inMemoryTaskManager.epicMap);
 
         Epic oldEpic = inMemoryTaskManager.epicMap.get(1);
-        System.out.println(oldEpic.subtaskList);
+        System.out.println(oldEpic.getSubtaskList());
     }
 
     @Test
