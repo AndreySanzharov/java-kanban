@@ -15,22 +15,22 @@ public class InMemoryHistoryManager implements HistoryManager {
     public static Map<Integer, Node<Task>> history = new HashMap();
 
     private void linklast(Task task) {
-       Node<Task> newNode = new Node<>(task);
-       if (tail == null){
-           head = newNode;
-           tail = newNode;
-       }else{
-           tail.next = newNode;
-           newNode.prev = tail;
-           tail = newNode;
-       }
-       history.put(task.getId(), newNode);
+        Node<Task> newNode = new Node<>(task);
+        if (tail == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        history.put(task.getId(), newNode);
     }
 
     private List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         Node<Task> current = head;
-        while (current != null){
+        while (current != null) {
             tasks.add(current.data);
             current = current.next;
         }
@@ -38,15 +38,15 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(Node<Task> node) {
-        if (node.prev != null){
+        if (node.prev != null) {
             node.prev.next = node.next;
-        }else{
+        } else {
             head = node.next;
         }
 
-        if (node.next != null){
+        if (node.next != null) {
             node.next.prev = node.prev;
-        }else{
+        } else {
             tail = node.prev;
         }
 
@@ -55,11 +55,11 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-       Node<Task> existingNode = history.get(task.getId());
-       if (existingNode != null){
-           removeNode(existingNode);
-       }
-       linklast(task);
+        Node<Task> existingNode = history.get(task.getId());
+        if (existingNode != null) {
+            removeNode(existingNode);
+        }
+        linklast(task);
     }
 
     @Override
@@ -72,7 +72,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     public List<Task> getHistory() {
         return getTasks();
     }
-
 
 }
 
