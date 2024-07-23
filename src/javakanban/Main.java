@@ -6,7 +6,6 @@ import javakanban.elements.Subtask;
 import javakanban.elements.Task;
 import javakanban.interfaces.TaskManager;
 import javakanban.managers.InMemoryHistoryManager;
-import javakanban.managers.InMemoryTaskManager;
 import javakanban.managers.Managers;
 
 public class Main {
