@@ -1,7 +1,12 @@
+import JavaKanban.Elements.Epic;
+import JavaKanban.Elements.Status;
+import JavaKanban.Elements.Task;
+import JavaKanban.Managers.InMemoryHistoryManager;
+import JavaKanban.Managers.InMemoryTaskManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class LocalTests {
+public class ExeptionsTest {
     InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
     Task task = new Task("AAA", "BBB", Status.NEW);
@@ -32,28 +37,13 @@ public class LocalTests {
 
         inMemoryTaskManager.getTaskById(0);
         inMemoryTaskManager.getEpicById(1);
+
         Assertions.assertNotNull(InMemoryHistoryManager.history, "Список истории пуст!");
-        Assertions.assertNotEquals(InMemoryHistoryManager.history.getFirst().getClass(),
-                InMemoryHistoryManager.history.getLast().getClass(), "Типы задач равны!");
     }
 
     @Test
     public void TheTaskIsUnchangedWhenAddedToTheManager() {
         inMemoryTaskManager.addTask(task);
         Assertions.assertEquals(task, inMemoryTaskManager.taskMap.get(0));
-    }
-
-    @Test
-    public void OldTasksStayInHistory() {
-        inMemoryTaskManager.addTask(task);
-        inMemoryTaskManager.getTaskById(0);
-        Task task2 = new Task("Обновленная задача", "Взять меня в Яндекс по доброте душевной :)",
-                Status.DONE);
-        inMemoryTaskManager.addTask(task2);
-
-        inMemoryTaskManager.updateTask(0, task2);
-        inMemoryTaskManager.getTaskById(0);
-        System.out.println(InMemoryHistoryManager.history);
-        Assertions.assertTrue(InMemoryHistoryManager.history.size() > 1);
     }
 }

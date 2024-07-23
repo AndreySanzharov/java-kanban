@@ -1,9 +1,11 @@
+package JavaKanban.Elements;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
 
-    List<Subtask> subtaskList = new ArrayList<>();
+    public List<Subtask> subtaskList = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description, Status.NEW);
@@ -50,4 +52,6 @@ public class Epic extends Task {
             }
         }
     }
+
+
 }
