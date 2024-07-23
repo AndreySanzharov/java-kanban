@@ -1,11 +1,11 @@
-package JavaKanban;
+package javakanban;
 
-import JavaKanban.elements.Epic;
-import JavaKanban.elements.Status;
-import JavaKanban.elements.Subtask;
-import JavaKanban.elements.Task;
-import JavaKanban.managers.InMemoryHistoryManager;
-import JavaKanban.managers.InMemoryTaskManager;
+import javakanban.elements.Epic;
+import javakanban.elements.Status;
+import javakanban.elements.Subtask;
+import javakanban.elements.Task;
+import javakanban.managers.InMemoryHistoryManager;
+import javakanban.managers.InMemoryTaskManager;
 
 public class Main {
 

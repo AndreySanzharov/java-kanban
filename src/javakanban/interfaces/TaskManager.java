@@ -1,8 +1,8 @@
-package JavaKanban.interfaces;
+package javakanban.interfaces;
 
-import JavaKanban.elements.Epic;
-import JavaKanban.elements.Subtask;
-import JavaKanban.elements.Task;
+import javakanban.elements.Epic;
+import javakanban.elements.Subtask;
+import javakanban.elements.Task;
 
 import java.util.List;
 

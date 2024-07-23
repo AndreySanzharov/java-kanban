@@ -1,4 +1,4 @@
-package JavaKanban.elements;
+package javakanban.elements;
 
 public enum Status {
     NEW,

@@ -1,7 +1,7 @@
-package JavaKanban.managers;
+package javakanban.managers;
 
-import JavaKanban.interfaces.HistoryManager;
-import JavaKanban.interfaces.TaskManager;
+import javakanban.interfaces.HistoryManager;
+import javakanban.interfaces.TaskManager;
 
 public class Managers {
 

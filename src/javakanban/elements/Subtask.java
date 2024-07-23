@@ -1,4 +1,4 @@
-package JavaKanban.elements;
+package javakanban.elements;
 
 public class Subtask extends Task {
 

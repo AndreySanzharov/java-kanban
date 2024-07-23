@@ -1,8 +1,8 @@
-import JavaKanban.elements.Epic;
-import JavaKanban.elements.Status;
-import JavaKanban.elements.Task;
-import JavaKanban.managers.InMemoryHistoryManager;
-import JavaKanban.managers.InMemoryTaskManager;
+import javakanban.elements.Epic;
+import javakanban.elements.Status;
+import javakanban.elements.Task;
+import javakanban.managers.InMemoryHistoryManager;
+import javakanban.managers.InMemoryTaskManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

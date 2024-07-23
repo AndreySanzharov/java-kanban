@@ -1,6 +1,6 @@
 # java-kanban
 
-## Repository for homework project *"JavaKanban.elements.Task Manager"*.
+## Repository for homework project *"javakanban.elements.Task Manager"*.
 ***
 
 
