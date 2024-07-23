@@ -4,14 +4,16 @@ import javakanban.elements.Epic;
 import javakanban.elements.Status;
 import javakanban.elements.Subtask;
 import javakanban.elements.Task;
+import javakanban.interfaces.TaskManager;
 import javakanban.managers.InMemoryHistoryManager;
 import javakanban.managers.InMemoryTaskManager;
+import javakanban.managers.Managers;
 
 public class Main {
 
 
     public static void main(String[] args) {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        TaskManager inMemoryTaskManager = Managers.getDefault();
 
         Task task1 = new Task("Задача_1", "Описание_1", Status.NEW);
         Task task2 = new Task("Задача_2", "Описание_2", Status.IN_PROGRESS);

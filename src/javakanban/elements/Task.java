@@ -1,9 +1,9 @@
 package javakanban.elements;
 
 public class Task {
-    String name;
-    String description;
-    Status status;
+    public String name;
+    public String description;
+    public Status status;
     public int id;
 
     public Task(String name, String description, Status status) {
