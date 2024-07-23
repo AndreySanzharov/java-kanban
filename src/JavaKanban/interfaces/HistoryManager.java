@@ -1,6 +1,6 @@
-package JavaKanban.Interfaces;
+package JavaKanban.interfaces;
 
-import JavaKanban.Elements.Task;
+import JavaKanban.elements.Task;
 
 import java.util.List;
 

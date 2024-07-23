@@ -1,18 +1,17 @@
 package JavaKanban;
 
-import JavaKanban.Elements.Epic;
-import JavaKanban.Elements.Status;
-import JavaKanban.Elements.Subtask;
-import JavaKanban.Elements.Task;
-import JavaKanban.Managers.InMemoryHistoryManager;
-import JavaKanban.Managers.InMemoryTaskManager;
+import JavaKanban.elements.Epic;
+import JavaKanban.elements.Status;
+import JavaKanban.elements.Subtask;
+import JavaKanban.elements.Task;
+import JavaKanban.managers.InMemoryHistoryManager;
+import JavaKanban.managers.InMemoryTaskManager;
 
 public class Main {
 
 
     public static void main(String[] args) {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
-        InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
 
         Task task1 = new Task("Задача_1", "Описание_1", Status.NEW);
         Task task2 = new Task("Задача_2", "Описание_2", Status.IN_PROGRESS);

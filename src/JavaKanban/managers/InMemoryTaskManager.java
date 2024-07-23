@@ -1,10 +1,10 @@
-package JavaKanban.Managers;
+package JavaKanban.managers;
 
-import JavaKanban.Elements.Epic;
-import JavaKanban.Elements.Subtask;
-import JavaKanban.Elements.Task;
-import JavaKanban.Interfaces.HistoryManager;
-import JavaKanban.Interfaces.TaskManager;
+import JavaKanban.elements.Epic;
+import JavaKanban.elements.Subtask;
+import JavaKanban.elements.Task;
+import JavaKanban.interfaces.HistoryManager;
+import JavaKanban.interfaces.TaskManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

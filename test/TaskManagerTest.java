@@ -1,8 +1,8 @@
-import JavaKanban.Elements.Epic;
-import JavaKanban.Elements.Status;
-import JavaKanban.Elements.Subtask;
-import JavaKanban.Elements.Task;
-import JavaKanban.Managers.InMemoryTaskManager;
+import JavaKanban.elements.Epic;
+import JavaKanban.elements.Status;
+import JavaKanban.elements.Subtask;
+import JavaKanban.elements.Task;
+import JavaKanban.managers.InMemoryTaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

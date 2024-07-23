@@ -1,7 +1,7 @@
-import JavaKanban.Elements.Status;
-import JavaKanban.Elements.Task;
-import JavaKanban.Managers.InMemoryHistoryManager;
-import JavaKanban.Managers.InMemoryTaskManager;
+import JavaKanban.elements.Status;
+import JavaKanban.elements.Task;
+import JavaKanban.managers.InMemoryHistoryManager;
+import JavaKanban.managers.InMemoryTaskManager;
 import org.junit.jupiter.api.*;
 
 public class HistoryManagerTest {

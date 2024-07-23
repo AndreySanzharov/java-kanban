@@ -1,8 +1,8 @@
-package JavaKanban.Managers;
+package JavaKanban.managers;
 
-import JavaKanban.Elements.Node;
-import JavaKanban.Elements.Task;
-import JavaKanban.Interfaces.HistoryManager;
+import JavaKanban.elements.Node;
+import JavaKanban.elements.Task;
+import JavaKanban.interfaces.HistoryManager;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package JavaKanban.Elements;
+package JavaKanban.elements;
 
 public class Task {
     String name;

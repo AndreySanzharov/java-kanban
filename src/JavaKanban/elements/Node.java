@@ -1,4 +1,4 @@
-package JavaKanban.Elements;
+package JavaKanban.elements;
 
 public class Node<T> {
     public T data;
