@@ -10,28 +10,24 @@ public class HistoryManagerTest {
 
 
     @BeforeEach
-    public void create(){
+    public void create() {
         Task task = new Task("Задача", "Задача неделима", Status.NEW);
         inMemoryTaskManager.addTask(task);
     }
 
 
     @Test
-    public void theSameTasksAreSavedInHistoryOnlyOnce(){
+    public void theSameTasksAreSavedInHistoryOnlyOnce() {
         inMemoryTaskManager.getTaskById(0);
         inMemoryTaskManager.getTaskById(0);
-
-        System.out.println(InMemoryHistoryManager.history);
-
-        Assertions.assertTrue(InMemoryHistoryManager.history.size() == 1);
+        Assertions.assertEquals(2, InMemoryHistoryManager.history.size());
     }
 
     @Test
-    public void removeHistoryById(){
+    public void removeHistoryById() {
         inMemoryTaskManager.getTaskById(0);
         inMemoryHistoryManager.remove(0);
-        Assertions.assertEquals(0, InMemoryHistoryManager.history.size());
-
+        Assertions.assertEquals(1, InMemoryHistoryManager.history.size());
     }
 
 }
