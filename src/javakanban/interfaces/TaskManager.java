@@ -1,3 +1,9 @@
+package javakanban.interfaces;
+
+import javakanban.elements.Epic;
+import javakanban.elements.Subtask;
+import javakanban.elements.Task;
+
 import java.util.List;
 
 public interface TaskManager {

@@ -1,16 +1,23 @@
+package javakanban.managers;
+
+import javakanban.elements.Epic;
+import javakanban.elements.Subtask;
+import javakanban.elements.Task;
+import javakanban.interfaces.HistoryManager;
+import javakanban.interfaces.TaskManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    int id;
+    private int id;
 
-    Map<Integer, Task> taskMap = new HashMap<>();
-    Map<Integer, Epic> epicMap = new HashMap<>();
+    public Map<Integer, Task> taskMap = new HashMap<>();
+    public Map<Integer, Epic> epicMap = new HashMap<>();
 
-    InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
-
+    HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
 
     @Override
     public List<Task> getAll() {
@@ -41,8 +48,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtaskById(int epId, int subId) {
         Epic epic = epicMap.get(epId);
-        inMemoryHistoryManager.add(epic.subtaskList.get(subId));
-        return epic.subtaskList.get(subId);
+        inMemoryHistoryManager.add(epic.getSubtaskList().get(subId));
+        return epic.getSubtaskList().get(subId);
     }
 
     @Override
@@ -50,7 +57,6 @@ public class InMemoryTaskManager implements TaskManager {
         task.id = id;
         taskMap.put(task.id, task);
         id++;
-
     }
 
     @Override
@@ -58,7 +64,6 @@ public class InMemoryTaskManager implements TaskManager {
         epic.id = id;
         epicMap.put(epic.id, epic);
         id++;
-
     }
 
     @Override
@@ -85,15 +90,18 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epicMap.get(epicId);
         epic.deleteSubtask(subId);
         epic.updateStatus();
+        inMemoryHistoryManager.remove(subId);
     }
 
     @Override
     public void deleteTaskById(int id) {
         taskMap.remove(id);
+        inMemoryHistoryManager.remove(id);
     }
 
     @Override
     public void deleteEpicById(int id) {
         epicMap.remove(id);
+        inMemoryHistoryManager.remove(id);
     }
 }
