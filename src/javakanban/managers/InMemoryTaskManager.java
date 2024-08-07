@@ -14,8 +14,8 @@ import java.util.Map;
 public class InMemoryTaskManager implements TaskManager {
     private int id;
 
-    public Map<Integer, Task> taskMap = new HashMap<>();
-    public Map<Integer, Epic> epicMap = new HashMap<>();
+    public static Map<Integer, Task> taskMap = new HashMap<>();
+    public static Map<Integer, Epic> epicMap = new HashMap<>();
 
     HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
 
@@ -57,6 +57,7 @@ public class InMemoryTaskManager implements TaskManager {
         task.id = id;
         taskMap.put(task.id, task);
         id++;
+        FileBackedTaskManager.save();
     }
 
     @Override
@@ -64,6 +65,7 @@ public class InMemoryTaskManager implements TaskManager {
         epic.id = id;
         epicMap.put(epic.id, epic);
         id++;
+        FileBackedTaskManager.save();
     }
 
     @Override
@@ -71,6 +73,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epicMap.get(id);
         epic.addSubtask(subtask);
         epic.updateStatus();
+        FileBackedTaskManager.save();
     }
 
     @Override
