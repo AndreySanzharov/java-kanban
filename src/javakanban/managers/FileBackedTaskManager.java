@@ -1,13 +1,23 @@
 package javakanban.managers;
 
-import javakanban.elements.*;
+import Exceptions.ManagerSaveException;
+import javakanban.elements.Task;
+import javakanban.elements.Epic;
+import javakanban.elements.Subtask;
+import javakanban.elements.Status;
+import javakanban.elements.Types;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     //дополнительное задание
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
         Task task1 = new Task("task1", "task1 desc", Status.NEW);
@@ -18,8 +28,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         inMemoryTaskManager.addEpic(epic1);
         inMemoryTaskManager.addSubtask(1, sub1);
 
-        System.out.println(taskMap);
-        System.out.println(epicMap);
+        System.out.println(inMemoryTaskManager.taskMap);
+        System.out.println(inMemoryTaskManager.epicMap);
         System.out.println(epic1.getSubtaskList() + "\n");
 
         File file = new File("src/javakanban/save/load.csv");
@@ -32,8 +42,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
 
     public static void save() {
-        Managers.getDefault();
-
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("src/javakanban/save/save.csv"))) {
             fileWriter.write("id,type,name,status,description\n");
 
@@ -67,13 +75,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Ошибка записи в файл");
-            System.out.println(e.getMessage());
+            throw new ManagerSaveException(e.getMessage(), e.getCause());
         }
     }
 
 
-    public static void loadFromFile(File file) {
+    public static void loadFromFile(File file) throws IOException {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
 
@@ -89,17 +96,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 String description = infoString[4];
 
 
-                if (type.equals("TASK")) {
+                if ("TASK".equals(type)) {
                     taskMap.put(id, new Task(name, description, Status.valueOf(status)));
-                } else if (type.equals("EPIC")) {
+                } else if ("EPIC".equals(type)) {
                     epicMap.put(id, new Epic(name, description));
                     lastEpicId = id;
-                } else if (type.equals("SUBTASK")) {
+                } else if ("SUBTASK".equals(type)) {
                     inMemoryTaskManager.addSubtask(lastEpicId, new Subtask(name, description, Status.valueOf(status)));
                 }
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
