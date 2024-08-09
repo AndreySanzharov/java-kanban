@@ -28,27 +28,27 @@ public class Epic extends Task {
 
     public void updateStatus() {
         if (subtaskList.isEmpty()) {
-            status = Status.NEW;
+            setStatus(Status.NEW);
         } else {
             int statusCounter = 0;
             for (Subtask subtask : subtaskList) {
-                if (subtask.status == Status.NEW) {
+                if (subtask.getStatus() == Status.NEW) {
                     statusCounter++;
                 }
                 if (statusCounter == subtaskList.size()) {
-                    status = Status.NEW;
+                    setStatus(Status.NEW);
                 } else {
-                    status = Status.IN_PROGRESS;
+                    setStatus(Status.IN_PROGRESS);
                 }
             }
         }
         int statusCounter = 0;
         for (Subtask subtask : subtaskList) {
-            if (subtask.status == Status.DONE) {
+            if (subtask.getStatus() == Status.DONE) {
                 statusCounter++;
             }
             if (statusCounter == subtaskList.size()) {
-                status = Status.DONE;
+                setStatus(Status.DONE);
             }
         }
     }
