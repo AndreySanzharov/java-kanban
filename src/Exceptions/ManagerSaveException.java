@@ -1,6 +1,5 @@
 package Exceptions;
 
-import javakanban.managers.Managers;
 
 public class ManagerSaveException extends RuntimeException {
     public ManagerSaveException() {
