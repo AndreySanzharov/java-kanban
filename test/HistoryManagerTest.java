@@ -4,6 +4,9 @@ import javakanban.managers.InMemoryHistoryManager;
 import javakanban.managers.InMemoryTaskManager;
 import org.junit.jupiter.api.*;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class HistoryManagerTest {
     InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
     InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
@@ -11,7 +14,8 @@ public class HistoryManagerTest {
 
     @BeforeEach
     public void create() {
-        Task task = new Task("Задача", "Задача неделима", Status.NEW);
+        Task task = new Task("Задача", "Задача неделима", Status.NEW,
+                Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 10, 10, 0));
         inMemoryTaskManager.addTask(task);
     }
 

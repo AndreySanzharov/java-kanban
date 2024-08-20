@@ -6,6 +6,8 @@ import javakanban.managers.InMemoryTaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,13 @@ class TaskManagerTest {
 
     @BeforeEach
     void createTasks() {
-        Task task = new Task("AAA", "AAA", Status.NEW);
+        Task task = new Task("AAA", "AAA", Status.NEW,
+                Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 10, 10, 0));
         Epic epic = new Epic("BBB", "BBB");
-        Subtask subtask1 = new Subtask("CCC", "CCC", Status.NEW);
-        Subtask subtask2 = new Subtask("DDD", "DDD", Status.NEW);
+        Subtask subtask1 = new Subtask("CCC", "CCC", Status.NEW,
+                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 11, 0));
+        Subtask subtask2 = new Subtask("DDD", "DDD", Status.NEW,
+                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 13, 11, 0));
         inMemoryTaskManager.addTask(task);
         inMemoryTaskManager.addEpic(epic);
 
@@ -29,7 +34,6 @@ class TaskManagerTest {
 
     @Test
     void getAll() {
-        System.out.println(inMemoryTaskManager.getAll());
         assertTrue(!inMemoryTaskManager.getAll().isEmpty());
     }
 
@@ -54,7 +58,6 @@ class TaskManagerTest {
         System.out.println(oldTask);
         Task newTask = new Task("KKK", "KKK", Status.IN_PROGRESS);
         inMemoryTaskManager.updateTask(0, newTask);
-        System.out.println(inMemoryTaskManager.taskMap.get(0));
         assertNotEquals(oldTask, newTask);
     }
 
@@ -68,7 +71,8 @@ class TaskManagerTest {
 
     @Test
     void addSubtask() {
-        inMemoryTaskManager.addSubtask(1, new Subtask("VVV", "VVV", Status.DONE));
+        inMemoryTaskManager.addSubtask(1, new Subtask("VVV", "VVV", Status.DONE,
+                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 11, 0)));
         Epic epic = inMemoryTaskManager.epicMap.get(1);
         System.out.println(epic.getSubtaskList());
         assertTrue(!epic.getSubtaskList().isEmpty());
@@ -76,9 +80,11 @@ class TaskManagerTest {
 
     @Test
     void updateSubtask() {
-        Subtask oldSub = new Subtask("PPP", "PPP", Status.IN_PROGRESS);
+        Subtask oldSub = new Subtask("PPP", "PPP", Status.IN_PROGRESS,
+                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 11, 0));
         inMemoryTaskManager.addSubtask(1, oldSub);
-        Subtask newSub = new Subtask("KKK", "KKK", Status.DONE);
+        Subtask newSub = new Subtask("KKK", "KKK", Status.DONE,
+                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 11, 0));
         inMemoryTaskManager.updateSubtask(1, 0, newSub);
 
         System.out.println(inMemoryTaskManager.epicMap);

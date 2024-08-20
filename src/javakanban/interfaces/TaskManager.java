@@ -5,8 +5,12 @@ import javakanban.elements.Subtask;
 import javakanban.elements.Task;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
+
+    public TreeSet<Task> getPrioritizedTasks();
+
     List<Task> getAll();
 
     void deleteAll();

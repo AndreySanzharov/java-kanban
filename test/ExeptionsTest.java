@@ -6,10 +6,14 @@ import javakanban.managers.InMemoryTaskManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class ExeptionsTest {
     InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
-    Task task = new Task("AAA", "BBB", Status.NEW);
+    Task task = new Task("AAA", "BBB", Status.NEW,
+            Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 10, 10, 0));
     Epic epic = new Epic("AAA", "BBB");
 
     @Test
@@ -33,8 +37,6 @@ public class ExeptionsTest {
 
         Epic epic = new Epic("Эпик", "Эпик делится на подзадачи");
         inMemoryTaskManager.addEpic(epic);
-        System.out.println(epic);
-
         inMemoryTaskManager.getTaskById(0);
         inMemoryTaskManager.getEpicById(1);
 

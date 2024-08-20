@@ -7,17 +7,53 @@ import javakanban.interfaces.HistoryManager;
 import javakanban.interfaces.TaskManager;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id;
 
     public static Map<Integer, Task> taskMap = new HashMap<>();
     public static Map<Integer, Epic> epicMap = new HashMap<>();
-
     HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+
+    @Override
+    public TreeSet<Task> getPrioritizedTasks() {
+        // TreeSet с компаратором по startTime
+        TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+
+        // Добавление задач из tasks
+        for (Task task : taskMap.values()) {
+            if (!isOverlapping(prioritizedTasks, task)) {
+                prioritizedTasks.add(task);
+            }
+        }
+
+        // Добавление эпиков из epics
+        for (Epic epic : epicMap.values()) {
+            if (!isOverlapping(prioritizedTasks, epic)) {
+                prioritizedTasks.add(epic);
+            }
+        }
+
+        return prioritizedTasks;
+    }
+
+    private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
+        Task lower = prioritizedTasks.lower(newTask);
+        Task higher = prioritizedTasks.higher(newTask);
+
+        if (lower != null && newTask.getStartTime().isBefore(lower.getEndTime())) {
+            return true;
+        }
+        if (higher != null && newTask.getEndTime().isAfter(higher.getStartTime())) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public List<Task> getAll() {
