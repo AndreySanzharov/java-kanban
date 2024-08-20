@@ -18,7 +18,7 @@ public class Epic extends Task {
     }
 
 
-    private void calculateTime(){
+    private void calculateTime() {
         this.startTime = subtaskList.stream().map(Subtask::getStartTime).min(LocalDateTime::compareTo).orElse(null);
         this.endTime = subtaskList.stream().map(Subtask::getEndTime).max(LocalDateTime::compareTo).orElse(null);
         this.duration = subtaskList.stream().map(Subtask::getDuration).reduce(Duration.ZERO, Duration::plus);

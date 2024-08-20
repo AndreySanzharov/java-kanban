@@ -25,11 +25,11 @@ public class Main {
                 Duration.ofMinutes(60), LocalDateTime.of(2024, 11, 10, 11, 0));
 
         Subtask sub1 = new Subtask("Подзадача_1", "Подзадача_1", Status.DONE,
-                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 11, 0));
+                Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 12, 11, 0));
         Subtask sub2 = new Subtask("Подзадача_2", "Подзадача_2", Status.DONE,
-                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 12, 0));
+                Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 12, 12, 0));
         Subtask sub3 = new Subtask("Подзадача_3", "Подзадача_3", Status.DONE,
-                Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 13, 0));
+                Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 12, 13, 0));
 
         Epic epicWithSub = new Epic("Эпик", "Эпик делится на подзадачи");
 
