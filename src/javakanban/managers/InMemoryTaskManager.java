@@ -23,7 +23,22 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public TreeSet<Task> getPrioritizedTasks() {
         // TreeSet с компаратором по startTime
-        TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+        TreeSet<Task> prioritizedTasks = new TreeSet<>(new Comparator<Task>() {
+            @Override
+            public int compare(Task t1, Task t2) {
+                // Обработка случаев, когда startTime у одной из задач равен null
+                if (t1.getStartTime() == null && t2.getStartTime() == null) {
+                    return 0;
+                }
+                if (t1.getStartTime() == null) {
+                    return -1; // null сначала
+                }
+                if (t2.getStartTime() == null) {
+                    return 1; // null сначала
+                }
+                return t1.getStartTime().compareTo(t2.getStartTime());
+            }
+        });
 
         // Добавление задач из tasks
         for (Task task : taskMap.values()) {
@@ -43,6 +58,10 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
+        if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
+            return false;
+        }
+
         Task lower = prioritizedTasks.lower(newTask);
         Task higher = prioritizedTasks.higher(newTask);
 

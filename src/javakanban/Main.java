@@ -32,7 +32,6 @@ public class Main {
                 Duration.ofMinutes(55),  LocalDateTime.of(2024, 11, 12, 13, 0));
 
         Epic epicWithSub = new Epic("Эпик", "Эпик делится на подзадачи");
-        Epic epicWithoutSub = new Epic("Эпик без подзадач", "Нет подзадач");
 
         inMemoryTaskManager.addTask(task1);
         inMemoryTaskManager.getTaskById(0);
