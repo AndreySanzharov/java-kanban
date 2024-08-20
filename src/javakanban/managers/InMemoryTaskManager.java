@@ -22,11 +22,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public TreeSet<Task> getPrioritizedTasks() {
-        // TreeSet с компаратором по startTime
         TreeSet<Task> prioritizedTasks = new TreeSet<>(new Comparator<Task>() {
             @Override
             public int compare(Task t1, Task t2) {
-                // Обработка случаев, когда startTime у одной из задач равен null
                 if (t1.getStartTime() == null && t2.getStartTime() == null) {
                     return 0;
                 }
@@ -40,14 +38,12 @@ public class InMemoryTaskManager implements TaskManager {
             }
         });
 
-        // Добавление задач из tasks
         for (Task task : taskMap.values()) {
             if (!isOverlapping(prioritizedTasks, task)) {
                 prioritizedTasks.add(task);
             }
         }
 
-        // Добавление эпиков из epics
         for (Epic epic : epicMap.values()) {
             if (!isOverlapping(prioritizedTasks, epic)) {
                 prioritizedTasks.add(epic);

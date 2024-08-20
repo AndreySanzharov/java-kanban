@@ -5,13 +5,11 @@ import javakanban.elements.Status;
 import javakanban.elements.Subtask;
 import javakanban.elements.Task;
 import javakanban.interfaces.TaskManager;
-import javakanban.managers.InMemoryHistoryManager;
 import javakanban.managers.Managers;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import static javakanban.managers.InMemoryTaskManager.epicMap;
 
 public class Main {
 
