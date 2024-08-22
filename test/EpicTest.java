@@ -1,13 +1,12 @@
 import javakanban.elements.Epic;
 import javakanban.elements.Status;
 import javakanban.elements.Subtask;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class EpicTest {
 
@@ -27,34 +26,34 @@ public class EpicTest {
     @Test
     void testAllSubtasksNew() {
         epic.addSubtask(newSubtask);
-        assertEquals(Status.NEW, epic.getStatus());
+        Assertions.assertEquals(Status.NEW, epic.getStatus());
     }
 
     @Test
     void testAllSubtasksDone() {
         epic.addSubtask(doneSubtask);
-        assertEquals(Status.DONE, epic.getStatus());
+        Assertions.assertEquals(Status.DONE, epic.getStatus());
     }
 
     @Test
     void testMixedSubtasks() {
         epic.addSubtask(newSubtask);
         epic.addSubtask(doneSubtask);
-        assertEquals(Status.IN_PROGRESS, epic.getStatus());
+        Assertions.assertEquals(Status.IN_PROGRESS, epic.getStatus());
     }
 
     @Test
     void testAllSubtasksInProgress() {
         epic.addSubtask(inProgressSubtask);
-        assertEquals(Status.IN_PROGRESS, epic.getStatus());
+        Assertions.assertEquals(Status.IN_PROGRESS, epic.getStatus());
     }
 
     @Test
     void testCalculateTime() {
         epic.addSubtask(newSubtask);
         epic.addSubtask(doneSubtask);
-        assertNotNull(epic.getStartTime());
-        assertNotNull(epic.getEndTime());
-        assertEquals(Duration.ofMinutes(60), epic.getDuration());
+        Assertions.assertNotNull(epic.getStartTime());
+        Assertions.assertNotNull(epic.getEndTime());
+        Assertions.assertEquals(Duration.ofMinutes(60), epic.getDuration());
     }
 }

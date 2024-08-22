@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class ExeptionsTest {
-    InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+    private InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
     Task task = new Task("AAA", "BBB", Status.NEW,
             Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 10, 10, 0));

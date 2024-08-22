@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 public interface TaskManager {
 
-    public TreeSet<Task> getPrioritizedTasks();
+    TreeSet<Task> getPrioritizedTasks();
 
     List<Task> getAll();
 

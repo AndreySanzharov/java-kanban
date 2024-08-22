@@ -30,7 +30,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         Epic epic1 = new Epic("epic1", "epic1 desc");
         Subtask sub1 = new Subtask("sub1", "sub1 desc", Status.DONE,
                 Duration.ofMinutes(55), LocalDateTime.of(2024, 11, 12, 11, 0));
-        ;
 
         inMemoryTaskManager.addTask(task1);
         inMemoryTaskManager.addEpic(epic1);

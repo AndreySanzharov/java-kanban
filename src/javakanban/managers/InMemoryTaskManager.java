@@ -22,28 +22,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public TreeSet<Task> getPrioritizedTasks() {
-        TreeSet<Task> prioritizedTasks = new TreeSet<>(new Comparator<Task>() {
-            @Override
-            public int compare(Task t1, Task t2) {
-                if (t1.getStartTime() == null && t2.getStartTime() == null) {
-                    return 0;
-                }
-                if (t1.getStartTime() == null) {
-                    return -1; // null сначала
-                }
-                if (t2.getStartTime() == null) {
-                    return 1; // null сначала
-                }
-                return t1.getStartTime().compareTo(t2.getStartTime());
-            }
-        });
+        TreeSet<Task> prioritizedTasks = new TreeSet<>(
+                Comparator.comparing(Task::getStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
+                        .thenComparing(Task::getId));
 
+        // Добавление задач из tasks
         for (Task task : taskMap.values()) {
             if (!isOverlapping(prioritizedTasks, task)) {
                 prioritizedTasks.add(task);
             }
         }
 
+        // Добавление эпиков из epics
         for (Epic epic : epicMap.values()) {
             if (!isOverlapping(prioritizedTasks, epic)) {
                 prioritizedTasks.add(epic);
@@ -53,6 +43,7 @@ public class InMemoryTaskManager implements TaskManager {
         return prioritizedTasks;
     }
 
+
     private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
         if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
             return false;
@@ -61,13 +52,8 @@ public class InMemoryTaskManager implements TaskManager {
         Task lower = prioritizedTasks.lower(newTask);
         Task higher = prioritizedTasks.higher(newTask);
 
-        if (lower != null && newTask.getStartTime().isBefore(lower.getEndTime())) {
-            return true;
-        }
-        if (higher != null && newTask.getEndTime().isAfter(higher.getStartTime())) {
-            return true;
-        }
-        return false;
+        return (lower != null && newTask.getStartTime().isBefore(lower.getEndTime())) ||
+                (higher != null && newTask.getEndTime().isAfter(higher.getStartTime()));
     }
 
     @Override
