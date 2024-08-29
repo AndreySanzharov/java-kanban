@@ -5,11 +5,14 @@ import javakanban.elements.Subtask;
 import javakanban.elements.Task;
 
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 public interface TaskManager {
 
     TreeSet<Task> getPrioritizedTasks();
+
+    Map<Integer, Task> getTaskMap();
 
     List<Task> getAll();
 

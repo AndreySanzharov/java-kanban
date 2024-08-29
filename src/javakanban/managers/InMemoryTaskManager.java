@@ -21,39 +21,8 @@ public class InMemoryTaskManager implements TaskManager {
     HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
 
     @Override
-    public TreeSet<Task> getPrioritizedTasks() {
-        TreeSet<Task> prioritizedTasks = new TreeSet<>(
-                Comparator.comparing(Task::getStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
-                        .thenComparing(Task::getId));
-
-        // Добавление задач из tasks
-        for (Task task : taskMap.values()) {
-            if (!isOverlapping(prioritizedTasks, task)) {
-                prioritizedTasks.add(task);
-            }
-        }
-
-        // Добавление эпиков из epics
-        for (Epic epic : epicMap.values()) {
-            if (!isOverlapping(prioritizedTasks, epic)) {
-                prioritizedTasks.add(epic);
-            }
-        }
-
-        return prioritizedTasks;
-    }
-
-
-    private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
-        if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
-            return false;
-        }
-
-        Task lower = prioritizedTasks.lower(newTask);
-        Task higher = prioritizedTasks.higher(newTask);
-
-        return (lower != null && newTask.getStartTime().isBefore(lower.getEndTime())) ||
-                (higher != null && newTask.getEndTime().isAfter(higher.getStartTime()));
+    public Map<Integer, Task> getTaskMap() {
+        return taskMap;
     }
 
     @Override
@@ -143,5 +112,40 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpicById(int id) {
         epicMap.remove(id);
         inMemoryHistoryManager.remove(id);
+    }
+    @Override
+    public TreeSet<Task> getPrioritizedTasks() {
+        TreeSet<Task> prioritizedTasks = new TreeSet<>(
+                Comparator.comparing(Task::getStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
+                        .thenComparing(Task::getId));
+
+        // Добавление задач из tasks
+        for (Task task : taskMap.values()) {
+            if (!isOverlapping(prioritizedTasks, task)) {
+                prioritizedTasks.add(task);
+            }
+        }
+
+        // Добавление эпиков из epics
+        for (Epic epic : epicMap.values()) {
+            if (!isOverlapping(prioritizedTasks, epic)) {
+                prioritizedTasks.add(epic);
+            }
+        }
+
+        return prioritizedTasks;
+    }
+
+
+    private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
+        if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
+            return false;
+        }
+
+        Task lower = prioritizedTasks.lower(newTask);
+        Task higher = prioritizedTasks.higher(newTask);
+
+        return (lower != null && newTask.getStartTime().isBefore(lower.getEndTime())) ||
+                (higher != null && newTask.getEndTime().isAfter(higher.getStartTime()));
     }
 }
