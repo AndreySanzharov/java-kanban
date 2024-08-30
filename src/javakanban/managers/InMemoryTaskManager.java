@@ -21,15 +21,30 @@ public class InMemoryTaskManager implements TaskManager {
     HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
 
     @Override
-    public Map<Integer, Task> getTaskMap() {
-        return taskMap;
-    }
-
-    @Override
     public List<Task> getAll() {
         ArrayList<Task> rez = new ArrayList<>();
         rez.addAll(taskMap.values());
         rez.addAll(epicMap.values());
+        return rez;
+    }
+    @Override
+    public List<Task> getTasks(){
+        ArrayList<Task> rez = new ArrayList<>();
+        rez.addAll(taskMap.values());
+        return rez;
+    }
+
+    @Override
+    public List<Task> getEpics(){
+        ArrayList<Task> rez = new ArrayList<>();
+        rez.addAll(epicMap.values());
+        return rez;
+    }
+
+    @Override
+    public List<Subtask> getSubtasks(int epId){
+        Epic epic = epicMap.get(epId);
+        List<Subtask> rez = epic.getSubtaskList();
         return rez;
     }
 

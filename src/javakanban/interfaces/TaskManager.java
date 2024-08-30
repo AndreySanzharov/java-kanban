@@ -5,16 +5,19 @@ import javakanban.elements.Subtask;
 import javakanban.elements.Task;
 
 import java.util.List;
-import java.util.Map;
 import java.util.TreeSet;
 
 public interface TaskManager {
 
     TreeSet<Task> getPrioritizedTasks();
 
-    Map<Integer, Task> getTaskMap();
-
     List<Task> getAll();
+
+    List<Task> getTasks();
+
+    List<Task> getEpics();
+
+    List<Subtask> getSubtasks(int epId);
 
     void deleteAll();
 
@@ -39,4 +42,5 @@ public interface TaskManager {
     void deleteTaskById(int id);
 
     void deleteEpicById(int id);
+
 }
