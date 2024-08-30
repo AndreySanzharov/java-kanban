@@ -2,8 +2,11 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 import server.handlers.EpicHandler;
+import server.handlers.HistoryHandler;
 import server.handlers.SubtaskHandler;
 import server.handlers.TaskHandler;
+import server.handlers.PrioritizedHandler;
+
 
 
 import java.io.IOException;
@@ -19,6 +22,8 @@ public class HttpTaskServer {
         server.createContext("/tasks", new TaskHandler());
         server.createContext("/subtasks", new SubtaskHandler());
         server.createContext("/epics", new EpicHandler());
+        server.createContext("/history", new HistoryHandler());
+        server.createContext("/prioritized", new PrioritizedHandler());
         server.start();
     }
 

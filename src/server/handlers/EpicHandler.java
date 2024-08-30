@@ -48,8 +48,9 @@ public class EpicHandler extends BaseHttpHandler {
         try {
             String path = exchange.getRequestURI().getPath();
             String pathId = path.replaceFirst("/epics/", "");
-            int taskID = Integer.parseInt(pathId);
-            String response = gson.toJson(taskManager.getEpicById(taskID));
+            int epicId = Integer.parseInt(pathId);
+            lastEpicId = epicId;
+            String response = gson.toJson(taskManager.getEpicById(epicId));
             sendText(exchange, response);
         } catch (IOException exception) {
             sendNotFound(exchange);
