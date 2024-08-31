@@ -131,7 +131,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public TreeSet<Task> getPrioritizedTasks() {
         TreeSet<Task> prioritizedTasks = new TreeSet<>(
-                Comparator.comparing(Task::getStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
+                Comparator.comparing(Task::getEpicStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
                         .thenComparing(Task::getId));
 
         // Добавление задач из tasks
@@ -153,14 +153,14 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
-        if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
+        if (newTask.getEpicStartTime() == null || newTask.getEpicEndTime() == null) {
             return false;
         }
 
         Task lower = prioritizedTasks.lower(newTask);
         Task higher = prioritizedTasks.higher(newTask);
 
-        return (lower != null && newTask.getStartTime().isBefore(lower.getEndTime())) ||
-                (higher != null && newTask.getEndTime().isAfter(higher.getStartTime()));
+        return (lower != null && newTask.getEpicStartTime().isBefore(lower.getEpicEndTime())) ||
+                (higher != null && newTask.getEpicEndTime().isAfter(higher.getEpicStartTime()));
     }
 }

@@ -11,11 +11,16 @@ public class DurationAdapter extends TypeAdapter<Duration> {
 
     @Override
     public void write(JsonWriter jsonWriter, Duration duration) throws IOException {
-        jsonWriter.value(duration.toString()); // Преобразуем Duration в строку ISO-8601
+        if (duration == null){
+            jsonWriter.nullValue();
+        }else{
+            jsonWriter.value(duration.toString());
+        }
+
     }
 
     @Override
     public Duration read(JsonReader jsonReader) throws IOException {
-        return Duration.parse(jsonReader.nextString()); // Читаем строку и парсим обратно в Duration
+        return Duration.parse(jsonReader.nextString());
     }
 }

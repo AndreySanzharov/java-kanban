@@ -1,2 +1,3 @@
 id,type,name,status,description,startTime,endTime,duration
-0,TASK,Task to be deleted,NEW,Description of the task,17:37 31.08.24,18:07 31.08.24,30
+0,EPIC,EpicToGet,NEW,Epic Description,21:05 31.08.24,21:10 31.08.24,5
+0,SUBTASK,Sub,NEW,Desc,21:05 31.08.24,21:10 31.08.24,5

@@ -20,17 +20,23 @@ public class EpicHandler extends BaseHttpHandler {
                     getAllEpics(exchange);
                 } else if (Pattern.matches(("^/epics/\\d+$"), exchange.getRequestURI().getPath())) {
                     getEpicById(exchange);
-                } else if (Pattern.matches(("^/epic/(\\d+)/subtask$"), exchange.getRequestURI().getPath())) {
-                    getEpicsSubtask(exchange);
+                } else if (Pattern.matches(("^/epics/\\d+/subtask$"), exchange.getRequestURI().getPath())) {
+                    getEpicsSubtasks(exchange);
                 }
+                break;
+
             case "POST":
                 if (requestURI.equals("/epics")) {
                     createEpic(exchange);
                 }
+                break;
+
             case "DELETE":
-                if (Pattern.matches(("^/epics/\\d+$"), exchange.getRequestURI().getPath())) {
+                if (Pattern.matches("^/epics/\\d+$", exchange.getRequestURI().getPath())) {
                     deleteEpicById(exchange);
                 }
+                break;
+
             default:
                 exchange.sendResponseHeaders(405, 0);
                 exchange.close();
@@ -59,12 +65,14 @@ public class EpicHandler extends BaseHttpHandler {
         }
     }
 
-    private void getEpicsSubtask(HttpExchange exchange) throws IOException {
+    private void getEpicsSubtasks(HttpExchange exchange) throws IOException {
         try {
             String path = exchange.getRequestURI().getPath();
-            String[] parts = path.split("/");
-            String strId = parts[2];
-            int id = Integer.parseInt(strId);
+            String pathWithoutHost = path.substring(path.indexOf("/epics"));
+
+            String[] parts = pathWithoutHost.split("/");
+
+            int id = Integer.parseInt(parts[2]);
             Epic epic = taskManager.getEpicById(id);
             String response = gson.toJson(epic.getSubtaskList());
             sendText(exchange, response);
@@ -92,17 +100,25 @@ public class EpicHandler extends BaseHttpHandler {
     }
 
     private void deleteEpicById(HttpExchange exchange) throws IOException {
-        try{
+        try {
+            // Извлечение ID из URI запроса
             String path = exchange.getRequestURI().getPath();
             String pathId = path.replaceFirst("/epics/", "");
-
             int epicId = Integer.parseInt(pathId);
-            taskManager.deleteEpicById(epicId);
-            sendText(exchange, "Эпик успешно удален");
-        }catch (Exception exception){
-            sendNotFound(exchange);
-        }finally {
-            exchange.close();
+
+            // Удаление эпика из TaskManager
+            if (taskManager.getEpicById(epicId) != null) {
+                taskManager.deleteEpicById(epicId);
+
+                // Успешный ответ
+                String response = "Эпик успешно удален";
+                sendText(exchange, response);
+            } else {
+                // Эпик не найден
+                sendNotFound(exchange);
+            }
+        } catch (IOException e) {
+           sendNotFound(exchange);
         }
     }
 }

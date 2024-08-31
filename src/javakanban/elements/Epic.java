@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Epic extends Task {
 
-    private Duration duration;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Duration epicDuration;
+    private LocalDateTime epicStartTime;
+    private LocalDateTime epicEndTime;
 
     private List<Subtask> subtaskList = new ArrayList<>();
 
@@ -19,24 +19,24 @@ public class Epic extends Task {
 
 
     private void calculateTime() {
-        this.startTime = subtaskList.stream().map(Subtask::getStartTime).min(LocalDateTime::compareTo).orElse(null);
-        this.endTime = subtaskList.stream().map(Subtask::getEndTime).max(LocalDateTime::compareTo).orElse(null);
-        this.duration = subtaskList.stream().map(Subtask::getDuration).reduce(Duration.ZERO, Duration::plus);
+        this.epicStartTime = subtaskList.stream().map(Subtask::getEpicStartTime).min(LocalDateTime::compareTo).orElse(null);
+        this.epicEndTime = subtaskList.stream().map(Subtask::getEpicEndTime).max(LocalDateTime::compareTo).orElse(null);
+        this.epicDuration = subtaskList.stream().map(Subtask::getEpicDuration).reduce(Duration.ZERO, Duration::plus);
     }
 
     @Override
-    public Duration getDuration() {
-        return duration;
+    public Duration getEpicDuration() {
+        return epicDuration;
     }
 
     @Override
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public LocalDateTime getEpicStartTime() {
+        return epicStartTime;
     }
 
     @Override
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public LocalDateTime getEpicEndTime() {
+        return epicEndTime;
     }
 
     public void addSubtask(Subtask subtask) {

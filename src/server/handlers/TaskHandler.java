@@ -119,13 +119,9 @@ public class TaskHandler extends BaseHttpHandler {
             String pathId = path.replaceFirst("/tasks/", "");
             int taskID = Integer.parseInt(pathId);
 
-            Task taskToDelete = taskManager.getTaskById(taskID);
-            if (taskToDelete == null) {
-               sendNotFound(exchange);
-            } else {
-                taskManager.deleteTaskById(taskID);
-               sendText(exchange, "Задача успешно удалена");
-            }
+            taskManager.deleteTaskById(taskID);
+            sendText(exchange, "Задача успешно удалена");
+
         } catch (Exception exception) {
             sendNotFound(exchange);
         } finally {

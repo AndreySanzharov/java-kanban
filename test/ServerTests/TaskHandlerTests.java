@@ -24,7 +24,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class HttpTaskManagerTasksTest {
+public class TaskHandlerTests {
 
 
     private final TaskManager manager = new InMemoryTaskManager();
@@ -36,7 +36,7 @@ public class HttpTaskManagerTasksTest {
             .create();
     private final HttpClient client = HttpClient.newHttpClient();
 
-    public HttpTaskManagerTasksTest() throws IOException {
+    public TaskHandlerTests() throws IOException {
     }
 
     @BeforeEach
@@ -98,7 +98,7 @@ public class HttpTaskManagerTasksTest {
         manager.addTask(originalTask);
 
         Task updatedTask = new Task("Updated Task", "Updated Description",
-                Status.IN_PROGRESS, Duration.ofMinutes(60), originalTask.getStartTime());
+                Status.IN_PROGRESS, Duration.ofMinutes(60), originalTask.getEpicStartTime());
         updatedTask.setId(0);
 
         String updatedTaskJson = gson.toJson(updatedTask);
@@ -141,6 +141,5 @@ public class HttpTaskManagerTasksTest {
         List<Task> tasksAfterDeletion = manager.getTasks();
         Assertions.assertEquals(0, tasksAfterDeletion.size(), "После удаления должна быть 0 задач");
     }
-
 
 }
