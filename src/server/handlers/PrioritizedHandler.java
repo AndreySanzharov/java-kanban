@@ -13,7 +13,7 @@ public class PrioritizedHandler extends BaseHttpHandler {
 
         switch (requestMethod) {
             case "GET":
-                if (requestURI.equals("/history")) {
+                if (requestURI.equals("/prioritized")) {
                     getPrioritized(exchange);
                 }
         }
@@ -24,7 +24,7 @@ public class PrioritizedHandler extends BaseHttpHandler {
             String response = gson.toJson(taskManager.getPrioritizedTasks());
             sendText(exchange, response);
         } catch (RuntimeException exception) {
-            String response = "Ошибка получения истории запросов " + exception.getMessage();
+            String response = "Ошибка получения отфильтрованного списка задач " + exception.getMessage();
             exchange.sendResponseHeaders(400, response.length());
             exchange.getResponseBody().write(response.getBytes(StandardCharsets.UTF_8));
         } finally {

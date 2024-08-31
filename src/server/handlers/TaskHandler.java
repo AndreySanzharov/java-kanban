@@ -1,7 +1,5 @@
 package server.handlers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import javakanban.elements.Task;
 
@@ -11,13 +9,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 public class TaskHandler extends BaseHttpHandler {
-
-
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
         String requestMethod = exchange.getRequestMethod();
         String requestURI = exchange.getRequestURI().toString();
+
 
         switch (requestMethod) {
             case "GET":
@@ -87,20 +83,31 @@ public class TaskHandler extends BaseHttpHandler {
         }
     }
 
-    private void handleUpdateTask(HttpExchange exchange) {
+    private void handleUpdateTask(HttpExchange exchange) throws IOException {
         try {
             String path = exchange.getRequestURI().getPath();
             String pathId = path.replaceFirst("/tasks/", "");
             int taskID = Integer.parseInt(pathId);
 
+            Task existingTask = taskManager.getTaskById(taskID);
+            if (existingTask == null) {
+                sendNotFound(exchange);
+                return;
+            }
+
             InputStream inputStream = exchange.getRequestBody();
             String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
-            Task newTask = gson.fromJson(body, Task.class);
-            taskManager.updateTask(taskID, newTask);
+            Task updatedTask = gson.fromJson(body, Task.class);
+            updatedTask.setId(taskID);
 
+            taskManager.updateTask(taskID, updatedTask);
+
+            sendText(exchange, "Задача успешно обновлена");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            String response = "Ошибка при обновлении задачи: " + e.getMessage();
+            exchange.sendResponseHeaders(500, response.getBytes(StandardCharsets.UTF_8).length);
+            exchange.getResponseBody().write(response.getBytes(StandardCharsets.UTF_8));
         } finally {
             exchange.close();
         }
@@ -111,8 +118,14 @@ public class TaskHandler extends BaseHttpHandler {
             String path = exchange.getRequestURI().getPath();
             String pathId = path.replaceFirst("/tasks/", "");
             int taskID = Integer.parseInt(pathId);
-            taskManager.deleteTaskById(taskID);
-            sendText(exchange, "Задача успешно удалена");
+
+            Task taskToDelete = taskManager.getTaskById(taskID);
+            if (taskToDelete == null) {
+               sendNotFound(exchange);
+            } else {
+                taskManager.deleteTaskById(taskID);
+               sendText(exchange, "Задача успешно удалена");
+            }
         } catch (Exception exception) {
             sendNotFound(exchange);
         } finally {

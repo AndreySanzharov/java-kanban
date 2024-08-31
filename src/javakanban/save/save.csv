@@ -1,3 +1,2 @@
 id,type,name,status,description,startTime,endTime,duration
-0,TASK,Task,NEW,Description,12:47 30.08.24,13:47 30.08.24,60
-1,TASK,Task2,NEW,Description2,12:47 30.08.24,14:47 30.08.24,120
+0,TASK,Task to be deleted,NEW,Description of the task,17:37 31.08.24,18:07 31.08.24,30

@@ -17,14 +17,13 @@ public class HttpTaskServer {
     public static HttpServer server;
     private static final int PORT = 8080;
 
-    public static void main(String[] args) throws IOException {
+    public HttpTaskServer() throws IOException {
         server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/tasks", new TaskHandler());
         server.createContext("/subtasks", new SubtaskHandler());
         server.createContext("/epics", new EpicHandler());
         server.createContext("/history", new HistoryHandler());
         server.createContext("/prioritized", new PrioritizedHandler());
-        server.start();
     }
 
     public void start() {
