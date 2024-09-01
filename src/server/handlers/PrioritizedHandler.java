@@ -16,6 +16,7 @@ public class PrioritizedHandler extends BaseHttpHandler {
                 if (requestURI.equals("/prioritized")) {
                     getPrioritized(exchange);
                 }
+                break;
         }
     }
 
