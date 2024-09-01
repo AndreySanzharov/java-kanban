@@ -18,7 +18,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     public static Map<Integer, Task> taskMap = new HashMap<>();
     public static Map<Integer, Epic> epicMap = new HashMap<>();
-    HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+
+    private HistoryManager inMemoryHistoryManager;
+
+
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        this.inMemoryHistoryManager = historyManager;
+    }
+
+    public InMemoryTaskManager() {
+    }
 
     @Override
     public List<Task> getAll() {
@@ -27,22 +36,23 @@ public class InMemoryTaskManager implements TaskManager {
         rez.addAll(epicMap.values());
         return rez;
     }
+
     @Override
-    public List<Task> getTasks(){
+    public List<Task> getTasks() {
         ArrayList<Task> rez = new ArrayList<>();
         rez.addAll(taskMap.values());
         return rez;
     }
 
     @Override
-    public List<Task> getEpics(){
+    public List<Task> getEpics() {
         ArrayList<Task> rez = new ArrayList<>();
         rez.addAll(epicMap.values());
         return rez;
     }
 
     @Override
-    public List<Subtask> getSubtasks(int epId){
+    public List<Subtask> getSubtasks(int epId) {
         Epic epic = epicMap.get(epId);
         List<Subtask> rez = epic.getSubtaskList();
         return rez;
@@ -128,6 +138,7 @@ public class InMemoryTaskManager implements TaskManager {
         epicMap.remove(id);
         inMemoryHistoryManager.remove(id);
     }
+
     @Override
     public TreeSet<Task> getPrioritizedTasks() {
         TreeSet<Task> prioritizedTasks = new TreeSet<>(

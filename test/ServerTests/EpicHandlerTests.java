@@ -74,7 +74,7 @@ public class EpicHandlerTests {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         // Проверяем, что статус код ответа равен 200
-        Assertions.assertEquals(200, response.statusCode(), "Некорректный статус код ответа");
+        Assertions.assertEquals(200, response.statusCode(), "Некорректны код ответа");
 
         // Проверяем, что эпик был добавлен
         List<Task> epicsFromManager = manager.getEpics();

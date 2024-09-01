@@ -118,7 +118,7 @@ public class EpicHandler extends BaseHttpHandler {
                 sendNotFound(exchange);
             }
         } catch (IOException e) {
-           sendNotFound(exchange);
+            sendNotFound(exchange);
         }
     }
 }

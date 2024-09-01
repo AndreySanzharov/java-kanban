@@ -1,12 +1,9 @@
 package server;
 
 import com.sun.net.httpserver.HttpServer;
-import server.handlers.EpicHandler;
-import server.handlers.HistoryHandler;
-import server.handlers.SubtaskHandler;
-import server.handlers.TaskHandler;
-import server.handlers.PrioritizedHandler;
-
+import javakanban.interfaces.HistoryManager;
+import javakanban.managers.Managers;
+import server.handlers.*;
 
 
 import java.io.IOException;
@@ -16,13 +13,15 @@ public class HttpTaskServer {
 
     public static HttpServer server;
     private static final int PORT = 8080;
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     public HttpTaskServer() throws IOException {
+
         server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/tasks", new TaskHandler());
         server.createContext("/subtasks", new SubtaskHandler());
         server.createContext("/epics", new EpicHandler());
-        server.createContext("/history", new HistoryHandler());
+        server.createContext("/history", new HistoryHandler(historyManager));
         server.createContext("/prioritized", new PrioritizedHandler());
     }
 
