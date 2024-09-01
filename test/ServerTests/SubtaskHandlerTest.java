@@ -49,7 +49,7 @@ public class SubtaskHandlerTest {
     }
 
     @Test
-    public void getEpicSubtaskById() throws IOException, InterruptedException {
+    public void getEpicSubtaskByIdTest() throws IOException, InterruptedException {
         // Создание эпика и подзадачи
         Epic epic = new Epic("Epic Name", "Epic Description");
         manager.addEpic(epic);
@@ -83,5 +83,4 @@ public class SubtaskHandlerTest {
         Assertions.assertEquals(subtask.getName(), retrievedSubtask.getName());
         Assertions.assertEquals(subtask.getDescription(), retrievedSubtask.getDescription());
     }
-
 }

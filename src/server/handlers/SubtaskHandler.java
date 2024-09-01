@@ -18,7 +18,7 @@ public class SubtaskHandler extends BaseHttpHandler {
 
         switch (requestMethod) {
             case "GET":
-                if (requestURI.equals("/subtsks")) {
+                if (requestURI.equals("/subtasks")) {
                     handleGetAllSubtasks(exchange);
                 } else if (Pattern.matches(("^/subtasks/\\d+$"), exchange.getRequestURI().getPath())) {
                     handleGetSubtaskById(exchange);
