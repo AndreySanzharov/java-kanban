@@ -108,8 +108,8 @@ public class SubtaskHandler extends BaseHttpHandler {
         }
     }
 
-    private void  handleDeleteSubtaskById(HttpExchange exchange) throws IOException {
-        try{
+    private void handleDeleteSubtaskById(HttpExchange exchange) throws IOException {
+        try {
             String path = exchange.getRequestURI().getPath();
             String pathId = path.replaceFirst("/subtasks/", "");
             int twoId = Integer.parseInt(pathId);
@@ -117,9 +117,9 @@ public class SubtaskHandler extends BaseHttpHandler {
             int subId = twoId % 10;
             taskManager.deleteSubtask(epId, subId);
             sendText(exchange, "Подзадача успешно удалена");
-        }catch(Exception exception){
+        } catch (Exception exception) {
             sendNotFound(exchange);
-        }finally {
+        } finally {
             exchange.close();
         }
     }

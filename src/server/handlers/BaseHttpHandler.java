@@ -33,14 +33,15 @@ public class BaseHttpHandler implements HttpHandler {
         exchange.close();
     }
 
-    protected void sendNotFound(HttpExchange exchange) throws IOException{
+    protected void sendNotFound(HttpExchange exchange) throws IOException {
         String resp = "Объект не найден";
         exchange.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
         exchange.sendResponseHeaders(404, resp.length());
         exchange.getResponseBody().write(resp.getBytes());
         exchange.close();
     }
-    protected void sendHasInteractions(HttpExchange exchange) throws IOException{
+
+    protected void sendHasInteractions(HttpExchange exchange) throws IOException {
         String resp = "Задачи пересекаются";
         exchange.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
         exchange.sendResponseHeaders(406, resp.length());
