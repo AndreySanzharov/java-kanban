@@ -22,6 +22,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SubtaskHandlerTest {
     private final TaskManager manager = new InMemoryTaskManager();
@@ -82,5 +84,37 @@ public class SubtaskHandlerTest {
         Assertions.assertNotNull(retrievedSubtask);
         Assertions.assertEquals(subtask.getName(), retrievedSubtask.getName());
         Assertions.assertEquals(subtask.getDescription(), retrievedSubtask.getDescription());
+    }
+
+    @Test
+    public void getAllSubtasksOfEpicTest() throws IOException, InterruptedException {
+        // Создание эпика и подзадач
+        Epic epic = new Epic("Epic Name", "Epic Description");
+        manager.addEpic(epic);
+
+        Subtask subtask1 = new Subtask("Subtask 1", "Subtask 1 Description", Status.NEW,
+                Duration.ofMinutes(30), LocalDateTime.now());
+        Subtask subtask2 = new Subtask("Subtask 2", "Subtask 2 Description", Status.NEW,
+                Duration.ofMinutes(45), LocalDateTime.now().plusMinutes(30));
+
+        manager.addSubtask(epic.getId(), subtask1);
+        manager.addSubtask(epic.getId(), subtask2);
+
+        // Проверяем, что подзадачи добавлены
+        Assertions.assertEquals(2, epic.getSubtaskList().size());
+
+        // Создаем URL для получения всех подзадач эпика
+        URI url = URI.create("http://localhost:8080/subtasks");
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(url)
+                .GET()
+                .build();
+
+        // Отправляем запрос и получаем ответ
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Assertions.assertEquals(200, response.statusCode());
+        List<String> subtasks = new ArrayList<>();
+        subtasks.add(response.body());
+        Assertions.assertFalse(subtasks.isEmpty(), "Список не должен быть пустым");
     }
 }

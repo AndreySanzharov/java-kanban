@@ -6,6 +6,7 @@ import javakanban.elements.Subtask;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class SubtaskHandler extends BaseHttpHandler {
@@ -43,11 +44,14 @@ public class SubtaskHandler extends BaseHttpHandler {
     }
 
     private void handleGetAllSubtasks(HttpExchange exchange) throws IOException {
-        /* поскольку мы можем обращаться в подзадачам через эпик, я решил, что будем обращаться к последнему эпику,
-         чтобы не передавать в адрес лишнюю информацию*/
-        String response = gson.toJson(taskManager.getSubtasks(lastEpicId));
-        sendText(exchange, response);
-        System.out.println(taskManager.getSubtasks(lastEpicId));
+        try {
+            String response = gson.toJson(taskManager.getSubtasks(lastEpicId));
+            sendText(exchange, response);
+        } catch (NumberFormatException exception) {
+            sendNotFound(exchange);
+        } finally {
+            exchange.close();
+        }
     }
 
     private void handleGetSubtaskById(HttpExchange exchange) throws IOException {
