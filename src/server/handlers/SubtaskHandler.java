@@ -6,7 +6,6 @@ import javakanban.elements.Subtask;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class SubtaskHandler extends BaseHttpHandler {
@@ -127,10 +126,21 @@ public class SubtaskHandler extends BaseHttpHandler {
         try {
             String path = exchange.getRequestURI().getPath();
             String pathId = path.replaceFirst("/subtasks/", "");
-            int twoId = Integer.parseInt(pathId);
-            int epId = twoId / 10;
-            int subId = twoId % 10;
-            taskManager.deleteSubtask(epId, subId);
+
+            // Предполагаем, что строка всегда имеет длину 2
+            if (pathId.length() != 2) {
+                sendNotFound(exchange);
+                return;
+            }
+
+            // Извлекаем первую цифру как эпик ID и вторую как подзадачу ID
+            int epID = Character.getNumericValue(pathId.charAt(0));
+            int subId = Character.getNumericValue(pathId.charAt(1));
+
+            // Удаляем подзадачу
+            taskManager.deleteSubtask(epID, subId);
+
+            // Отправляем подтверждение об успешном удалении
             sendText(exchange, "Подзадача успешно удалена");
         } catch (Exception exception) {
             sendNotFound(exchange);

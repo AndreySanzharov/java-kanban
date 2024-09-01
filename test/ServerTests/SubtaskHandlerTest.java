@@ -112,6 +112,7 @@ public class SubtaskHandlerTest {
 
         // Отправляем запрос и получаем ответ
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
         Assertions.assertEquals(200, response.statusCode());
         List<String> subtasks = new ArrayList<>();
         subtasks.add(response.body());
