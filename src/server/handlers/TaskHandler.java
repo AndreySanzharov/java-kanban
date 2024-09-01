@@ -14,7 +14,6 @@ public class TaskHandler extends BaseHttpHandler {
         String requestMethod = exchange.getRequestMethod();
         String requestURI = exchange.getRequestURI().toString();
 
-
         switch (requestMethod) {
             case "GET":
                 if (requestURI.equals("/tasks")) {

@@ -51,21 +51,27 @@ public class SubtaskHandler extends BaseHttpHandler {
     }
 
     private void handleGetSubtaskById(HttpExchange exchange) throws IOException {
-        /*тут уже вынуждены передать "двойной" id
-        первая цифра будет индексом эпика, а вторая - подзадачи */
         try {
             String path = exchange.getRequestURI().getPath();
 
+            // Извлечение идентификаторов эпика и подзадачи из пути
             String pathId = path.replaceFirst("/subtasks/", "");
+            String epIdStr = pathId.substring(0, 1); // Первая цифра - это ID эпика
+            String subIdStr = pathId.substring(1); // Остальная часть строки - ID подзадачи
 
-            int twoId = Integer.parseInt(pathId);
+            int epId = Integer.parseInt(epIdStr);
+            int subId = Integer.parseInt(subIdStr);
 
-            int epId = twoId / 10;
-            int subId = twoId % 10;
+            // Получение подзадачи по ID эпика и ID подзадачи
+            Subtask subtask = taskManager.getSubtaskById(epId, subId);
 
-            String response = gson.toJson(taskManager.getSubtaskById(epId, subId));
-            sendText(exchange, response);
-        } catch (IOException exception) {
+            if (subtask != null) {
+                String response = gson.toJson(subtask);
+                sendText(exchange, response);
+            } else {
+                sendNotFound(exchange);
+            }
+        } catch (IOException | NumberFormatException exception) {
             sendNotFound(exchange);
         } finally {
             exchange.close();
@@ -94,11 +100,16 @@ public class SubtaskHandler extends BaseHttpHandler {
         try {
             String path = exchange.getRequestURI().getPath();
             String pathId = path.replaceFirst("/subtasks/", "");
+
+            String epIdStr = pathId.substring(0, 1);
+            String subIdStr = pathId.substring(1, 2);
+
+            int epId = Integer.parseInt(epIdStr);
+            int subId = Integer.parseInt(subIdStr);
+
             InputStream inputStream = exchange.getRequestBody();
             String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-            int twoId = Integer.parseInt(pathId);
-            int epId = twoId / 10;
-            int subId = twoId % 10;
+
             Subtask subtask = gson.fromJson(body, Subtask.class);
             taskManager.updateSubtask(epId, subId, subtask);
         } catch (Exception exception) {

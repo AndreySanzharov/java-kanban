@@ -16,9 +16,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class BaseHttpHandler implements HttpHandler {
-    protected TaskManager taskManager = Managers.getDefault();
-    protected HistoryManager historyManager = Managers.getDefaultHistory();
-    protected static int lastEpicId = 0;
+    static TaskManager taskManager = Managers.getDefault();
+    static HistoryManager historyManager = Managers.getDefaultHistory();
+    static int lastEpicId = 0;
+
     Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
