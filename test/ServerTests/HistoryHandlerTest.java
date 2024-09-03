@@ -1,7 +1,5 @@
 package ServerTests;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import javakanban.elements.Status;
 import javakanban.elements.Task;
 import javakanban.interfaces.TaskManager;
@@ -11,8 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.HttpTaskServer;
-import server.adapters.DurationAdapter;
-import server.adapters.LocalDateTimeAdapter;
 
 import java.io.IOException;
 import java.net.URI;
@@ -25,11 +21,6 @@ import java.time.LocalDateTime;
 public class HistoryHandlerTest {
     private final TaskManager manager = new InMemoryTaskManager();
     private final HttpTaskServer taskServer = new HttpTaskServer();
-    private final Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .registerTypeAdapter(Duration.class, new DurationAdapter())
-            .create();
     private final HttpClient client = HttpClient.newHttpClient();
 
     public HistoryHandlerTest() throws IOException {
