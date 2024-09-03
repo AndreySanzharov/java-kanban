@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import javakanban.interfaces.HistoryManager;
 import javakanban.interfaces.TaskManager;
 import javakanban.managers.Managers;
 import server.adapters.DurationAdapter;
@@ -16,9 +15,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class BaseHttpHandler implements HttpHandler {
-    static TaskManager taskManager = Managers.getDefault();
-    static HistoryManager historyManager = Managers.getDefaultHistory();
-    static int lastEpicId = 0;
+    TaskManager taskManager = Managers.getDefault();
+    int lastEpicId = 0;
 
     Gson gson = new GsonBuilder()
             .setPrettyPrinting()
@@ -52,6 +50,5 @@ public class BaseHttpHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
     }
 }

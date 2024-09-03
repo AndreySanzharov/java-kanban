@@ -16,12 +16,17 @@ public class HistoryHandler extends BaseHttpHandler {
                 if (requestURI.equals("/history")) {
                     getHistory(exchange);
                 }
+
+            default:
+                exchange.sendResponseHeaders(405, 0);
+                exchange.close();
+                break;
         }
     }
 
     private void getHistory(HttpExchange exchange) throws IOException {
         try {
-            String response = gson.toJson(historyManager.getHistory());
+            String response = gson.toJson(taskManager.getHistory());
             sendText(exchange, response);
         } catch (IOException exception) {
             String response = "Ошибка получения истории запросов " + exception.getMessage();

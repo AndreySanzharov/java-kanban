@@ -18,7 +18,13 @@ public class InMemoryTaskManager implements TaskManager {
 
     public static Map<Integer, Task> taskMap = new HashMap<>();
     public static Map<Integer, Epic> epicMap = new HashMap<>();
-    HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+    private HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+
+    @Override
+    public List<Task> getHistory() {
+        List<Task> rez = inMemoryHistoryManager.getHistory();
+        return rez;
+    }
 
     @Override
     public List<Task> getAll() {
@@ -45,8 +51,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Subtask> getSubtasks(int epId) {
         Epic epic = epicMap.get(epId);
-        List<Subtask> rez = epic.getSubtaskList();
-        return rez;
+        return epic.getSubtaskList();
     }
 
     @Override

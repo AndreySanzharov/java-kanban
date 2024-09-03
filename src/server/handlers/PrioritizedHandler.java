@@ -17,6 +17,10 @@ public class PrioritizedHandler extends BaseHttpHandler {
                     getPrioritized(exchange);
                 }
                 break;
+            default:
+                exchange.sendResponseHeaders(405, 0);
+                exchange.close();
+                break;
         }
     }
 
