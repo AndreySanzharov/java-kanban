@@ -15,8 +15,11 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class BaseHttpHandler implements HttpHandler {
-    TaskManager taskManager = Managers.getDefault();
-    int lastEpicId = 0;
+    protected TaskManager taskManager = Managers.getDefault();
+    protected int lastEpicId = 0;
+
+    /* наверное, лучше оставить protected, потому что
+    эти поля используется только в директории handlers*/
 
     Gson gson = new GsonBuilder()
             .setPrettyPrinting()
