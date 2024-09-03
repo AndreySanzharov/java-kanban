@@ -1,0 +1,3 @@
+id,type,name,status,description,startTime,endTime,duration
+0,EPIC,EpicToGet,NEW,Epic Description,13:18 03.09.24,13:23 03.09.24,5
+0,SUBTASK,Sub,NEW,Desc,13:18 03.09.24,13:23 03.09.24,5

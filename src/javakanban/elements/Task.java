@@ -8,10 +8,10 @@ public class Task {
     private String name;
     private String description;
     private Status status;
-    public int id;
+    private int id;
     private LocalDateTime startTime;
     private Duration duration;
-    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd.MM.yy");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd.MM.yy");
 
 
     public Task(String name, String description, Status status) {
@@ -26,7 +26,7 @@ public class Task {
         this.startTime = startTime;
     }
 
-    public Duration getDuration() {
+    public Duration getEpicDuration() {
         return duration;
     }
 
@@ -34,7 +34,7 @@ public class Task {
         this.duration = duration;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalDateTime getEpicStartTime() {
         return startTime;
     }
 
@@ -42,7 +42,7 @@ public class Task {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalDateTime getEpicEndTime() {
         if ((startTime == null) || (duration == null)) {
             return null;
         } else {
@@ -88,8 +88,8 @@ public class Task {
                 "name= '" + name + '\'' +
                 ", desctiption= '" + description + '\'' +
                 ", status= '" + status + '\'' +
-                ", startTime= '" + getStartTime().format(FORMATTER) + '\'' +
-                ", endTime= '" + getEndTime().format(FORMATTER) + '\'' +
+                ", startTime= '" + getEpicStartTime().format(FORMATTER) + '\'' +
+                ", endTime= '" + getEpicEndTime().format(FORMATTER) + '\'' +
                 "}";
     }
 }

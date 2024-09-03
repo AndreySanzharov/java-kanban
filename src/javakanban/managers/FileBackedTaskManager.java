@@ -60,9 +60,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         task.getName() + "," +
                         task.getStatus() + "," +
                         task.getDescription() + "," +
-                        (task.getStartTime() != null ? task.getStartTime().format(FORMATTER) : "") + "," +
-                        (task.getEndTime() != null ? task.getEndTime().format(FORMATTER) : "") + "," +
-                        (task.getDuration() != null ? task.getDuration().toMinutes() : 0) + "\n");
+                        (task.getEpicStartTime() != null ? task.getEpicStartTime().format(FORMATTER) : "") + "," +
+                        (task.getEpicEndTime() != null ? task.getEpicEndTime().format(FORMATTER) : "") + "," +
+                        (task.getEpicDuration() != null ? task.getEpicDuration().toMinutes() : 0) + "\n");
             }
 
             // Сохранение эпиков и подзадач
@@ -73,9 +73,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         epic.getName() + "," +
                         epic.getStatus() + "," +
                         epic.getDescription() + "," +
-                        (epic.getStartTime() != null ? epic.getStartTime().format(FORMATTER) : "") + "," +
-                        (epic.getEndTime() != null ? epic.getEndTime().format(FORMATTER) : "") + "," +
-                        (epic.getDuration() != null ? epic.getDuration().toMinutes() : 0) + "\n");
+                        (epic.getEpicStartTime() != null ? epic.getEpicStartTime().format(FORMATTER) : "") + "," +
+                        (epic.getEpicEndTime() != null ? epic.getEpicEndTime().format(FORMATTER) : "") + "," +
+                        (epic.getEpicDuration() != null ? epic.getEpicDuration().toMinutes() : 0) + "\n");
 
                 for (Subtask sub : epic.getSubtaskList()) {
                     fileWriter.write(sub.getId() + "," +
@@ -83,9 +83,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                             sub.getName() + "," +
                             sub.getStatus() + "," +
                             sub.getDescription() + "," +
-                            (sub.getStartTime() != null ? sub.getStartTime().format(FORMATTER) : "") + "," +
-                            (sub.getEndTime() != null ? sub.getEndTime().format(FORMATTER) : "") + "," +
-                            (sub.getDuration() != null ? sub.getDuration().toMinutes() : 0) + "\n");
+                            (sub.getEpicStartTime() != null ? sub.getEpicStartTime().format(FORMATTER) : "") + "," +
+                            (sub.getEpicEndTime() != null ? sub.getEpicEndTime().format(FORMATTER) : "") + "," +
+                            (sub.getEpicDuration() != null ? sub.getEpicDuration().toMinutes() : 0) + "\n");
                 }
             }
         } catch (IOException e) {
