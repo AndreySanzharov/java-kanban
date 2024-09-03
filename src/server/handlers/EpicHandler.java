@@ -89,7 +89,7 @@ public class EpicHandler extends BaseHttpHandler {
             Epic newEpic = gson.fromJson(body, Epic.class);
             taskManager.addEpic(newEpic);
 
-            sendText(exchange, "Эпик успешно добавлен c id" + newEpic.id);
+            sendText(exchange, "Эпик успешно добавлен c id" + newEpic.getId());
         } catch (IOException exception) {
             String response = "Ошибка создания эпика: " + exception.getMessage();
             exchange.sendResponseHeaders(400, response.length());

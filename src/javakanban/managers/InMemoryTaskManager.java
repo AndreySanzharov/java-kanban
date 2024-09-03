@@ -22,8 +22,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getHistory() {
-        List<Task> rez = inMemoryHistoryManager.getHistory();
-        return rez;
+        return inMemoryHistoryManager.getHistory();
     }
 
     @Override
@@ -81,16 +80,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        task.id = id;
-        taskMap.put(task.id, task);
+        task.setId(id);
+        taskMap.put(task.getId(), task);
         id++;
         FileBackedTaskManager.save();
     }
 
     @Override
     public void addEpic(Epic epic) {
-        epic.id = id;
-        epicMap.put(epic.id, epic);
+        epic.setId(id);
+        epicMap.put(epic.getId(), epic);
         id++;
         FileBackedTaskManager.save();
     }

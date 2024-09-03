@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 public interface TaskManager {
 
-    public List<Task> getHistory();
+    List<Task> getHistory();
 
     TreeSet<Task> getPrioritizedTasks();
 

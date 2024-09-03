@@ -72,7 +72,7 @@ public class TaskHandler extends BaseHttpHandler {
             Task newTask = gson.fromJson(body, Task.class);
             taskManager.addTask(newTask);
 
-            sendText(exchange, "Задача успешно добавлена c id" + newTask.id);
+            sendText(exchange, "Задача успешно добавлена c id" + newTask.getId());
         } catch (IOException exception) {
             String response = "Ошибка создания задачи: " + exception.getMessage();
             exchange.sendResponseHeaders(400, response.length());

@@ -85,7 +85,7 @@ public class TaskHandlerTests {
 
         Task recievedTask = gson.fromJson(response.body(), Task.class);
 
-        Assertions.assertEquals(task.id, recievedTask.id, "id должно совпадать");
+        Assertions.assertEquals(task.getId(), recievedTask.getId(), "id должно совпадать");
         Assertions.assertEquals(task.getName(), recievedTask.getName(), "Имя должно совпадать");
 
         Assertions.assertEquals(200, response.statusCode());
