@@ -9,9 +9,17 @@ import java.util.TreeSet;
 
 public interface TaskManager {
 
+    List<Task> getHistory();
+
     TreeSet<Task> getPrioritizedTasks();
 
     List<Task> getAll();
+
+    List<Task> getTasks();
+
+    List<Task> getEpics();
+
+    List<Subtask> getSubtasks(int epId);
 
     void deleteAll();
 
@@ -36,4 +44,5 @@ public interface TaskManager {
     void deleteTaskById(int id);
 
     void deleteEpicById(int id);
+
 }

@@ -52,8 +52,8 @@ public class EpicTest {
     void testCalculateTime() {
         epic.addSubtask(newSubtask);
         epic.addSubtask(doneSubtask);
-        Assertions.assertNotNull(epic.getStartTime());
-        Assertions.assertNotNull(epic.getEndTime());
-        Assertions.assertEquals(Duration.ofMinutes(60), epic.getDuration());
+        Assertions.assertNotNull(epic.getEpicStartTime());
+        Assertions.assertNotNull(epic.getEpicEndTime());
+        Assertions.assertEquals(Duration.ofMinutes(60), epic.getEpicDuration());
     }
 }

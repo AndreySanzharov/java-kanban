@@ -18,42 +18,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     public static Map<Integer, Task> taskMap = new HashMap<>();
     public static Map<Integer, Epic> epicMap = new HashMap<>();
-    HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+    private HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
 
     @Override
-    public TreeSet<Task> getPrioritizedTasks() {
-        TreeSet<Task> prioritizedTasks = new TreeSet<>(
-                Comparator.comparing(Task::getStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
-                        .thenComparing(Task::getId));
-
-        // Добавление задач из tasks
-        for (Task task : taskMap.values()) {
-            if (!isOverlapping(prioritizedTasks, task)) {
-                prioritizedTasks.add(task);
-            }
-        }
-
-        // Добавление эпиков из epics
-        for (Epic epic : epicMap.values()) {
-            if (!isOverlapping(prioritizedTasks, epic)) {
-                prioritizedTasks.add(epic);
-            }
-        }
-
-        return prioritizedTasks;
-    }
-
-
-    private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
-        if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
-            return false;
-        }
-
-        Task lower = prioritizedTasks.lower(newTask);
-        Task higher = prioritizedTasks.higher(newTask);
-
-        return (lower != null && newTask.getStartTime().isBefore(lower.getEndTime())) ||
-                (higher != null && newTask.getEndTime().isAfter(higher.getStartTime()));
+    public List<Task> getHistory() {
+        return inMemoryHistoryManager.getHistory();
     }
 
     @Override
@@ -62,6 +31,26 @@ public class InMemoryTaskManager implements TaskManager {
         rez.addAll(taskMap.values());
         rez.addAll(epicMap.values());
         return rez;
+    }
+
+    @Override
+    public List<Task> getTasks() {
+        ArrayList<Task> rez = new ArrayList<>();
+        rez.addAll(taskMap.values());
+        return rez;
+    }
+
+    @Override
+    public List<Task> getEpics() {
+        ArrayList<Task> rez = new ArrayList<>();
+        rez.addAll(epicMap.values());
+        return rez;
+    }
+
+    @Override
+    public List<Subtask> getSubtasks(int epId) {
+        Epic epic = epicMap.get(epId);
+        return epic.getSubtaskList();
     }
 
     @Override
@@ -91,16 +80,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        task.id = id;
-        taskMap.put(task.id, task);
+        task.setId(id);
+        taskMap.put(task.getId(), task);
         id++;
         FileBackedTaskManager.save();
     }
 
     @Override
     public void addEpic(Epic epic) {
-        epic.id = id;
-        epicMap.put(epic.id, epic);
+        epic.setId(id);
+        epicMap.put(epic.getId(), epic);
         id++;
         FileBackedTaskManager.save();
     }
@@ -143,5 +132,41 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpicById(int id) {
         epicMap.remove(id);
         inMemoryHistoryManager.remove(id);
+    }
+
+    @Override
+    public TreeSet<Task> getPrioritizedTasks() {
+        TreeSet<Task> prioritizedTasks = new TreeSet<>(
+                Comparator.comparing(Task::getEpicStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
+                        .thenComparing(Task::getId));
+
+        // Добавление задач из tasks
+        for (Task task : taskMap.values()) {
+            if (!isOverlapping(prioritizedTasks, task)) {
+                prioritizedTasks.add(task);
+            }
+        }
+
+        // Добавление эпиков из epics
+        for (Epic epic : epicMap.values()) {
+            if (!isOverlapping(prioritizedTasks, epic)) {
+                prioritizedTasks.add(epic);
+            }
+        }
+
+        return prioritizedTasks;
+    }
+
+
+    private boolean isOverlapping(TreeSet<Task> prioritizedTasks, Task newTask) {
+        if (newTask.getEpicStartTime() == null || newTask.getEpicEndTime() == null) {
+            return false;
+        }
+
+        Task lower = prioritizedTasks.lower(newTask);
+        Task higher = prioritizedTasks.higher(newTask);
+
+        return (lower != null && newTask.getEpicStartTime().isBefore(lower.getEpicEndTime())) ||
+                (higher != null && newTask.getEpicEndTime().isAfter(higher.getEpicStartTime()));
     }
 }
